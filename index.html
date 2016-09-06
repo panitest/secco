@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<title>Secco</title>
+<link rel="stylesheet" href="secco.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="fonts/fonts.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css" type="text/css" charset="utf-8" />
+<style>
+#admin{ width:50px; height:50px; position:fixed; top:0; left:0; z-index:10000; background:url(images/Vacio.gif);}
+#panel{ width:100%; height:100%; position:fixed;z-index:20000; background:#CCC; display:none}
+label{ font-family:Verdana, Geneva, sans-serif; font-size:14px; color:#000; width:80%; margin:auto; display:block; margin-top:30px}
+input[type="button"]{ width:30%; height:50px; margin:auto; display:block}
+#log{ font-family:Verdana, Geneva, sans-serif; font-size:12px; text-align:center}
+</style>
+
+<script type="text/javascript" src="js/panino.js"></script>
+<script type="text/javascript" src="js/comunes.js"></script>
+<script type="text/javascript" src="js/paninoAJAX.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script>
+function getPage(p,callback){
+		request(
+			p,
+			function(r){
+				scrollTo(0,0);
+				$('appcontainer').innerHTML=r;
+				if(typeof callback=='function'){
+					callback();
+				}
+			},
+			{}
+		);
+}
+function getRandomInt(min, max) {
+    	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function inArray(needle, haystack) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}
+ns.preguntas=[
+	{//1
+	'pregunta':'¿A qué se dedica<br>la empresa?',
+	'a':'Compresión de Gas.',
+	'b':'Generación de Energía.',
+	'c':'Metalmecánica',
+	'd':'Rental de Equipos.',
+	'e':'Todas las anteriores.',
+	'corecta':'e'
+	},
+	{//2
+	'pregunta':'¿Dónde se<br>encuentra SECCO?',
+	'a':'En Neuquén y Chubut.',
+	'b':'En todas las provincias del país.',
+	'c':'En todas las provincias y países de la región.',
+	'corecta':'c'
+	},
+	{//3
+	'pregunta':'¿Cuántos empleados<br>trabajan en SECCO?',
+	'a':'Menos de 1000.',
+	'b':'Entre 1000 y 2000.',
+	'c':'Más de 2000.',
+	'corecta':'c'
+	}
+];
+function inicio(){
+	if(!localStorage.getItem('datos')){
+		ns.datos=[];
+	}else{
+		ns.datos=JSON.parse(localStorage.getItem('datos'));
+	}
+	if(!localStorage.getItem('tablet')){
+		ns.tablet=getRandomInt(1, 100)+'_'+(+new Date());
+		localStorage.setItem('tablet',ns.tablet);
+	}else{
+		ns.tablet=localStorage.getItem('tablet');
+	}
+}
+DR(inicio);
+
+function getPreguntas(){
+	ns.preg=[];
+	ns.correctas=0;
+	ns.incorrectas=0;
+	var grupo=ns['preguntas'],pa;
+	while(ns.preg.length<3){
+		pa=grupo[getRandomInt(0, 3)];
+		if(pa && !inArray(pa,ns.preg) && pa['pregunta']){
+			ns.preg.push(pa);
+		}
+	}
+	siguientePregunta();
+}
+function siguientePregunta(){
+	if(ns.preg.length<1){
+		fin();
+		return;
+	}
+	ns.preguntaActual=ns.preg.shift();
+	getPage('trivia.html',setPreguntas);
+	
+}
+function setPreguntas(){
+	$('btn').style.display='none';
+	$('pregunta').innerHTML=ns.preguntaActual['pregunta'];
+	if(ns.preguntaActual['pregunta']=='¿A qué se dedica<br>la empresa?'){
+		$('pregunta').style.paddingTop='40px';
+		$('cajarespuestas').style.height='440px';
+	}else{
+		$('pregunta').style.paddingTop='';
+		$('cajarespuestas').style.height='';
+	}
+	if(ns.preguntaActual['a']){
+		$('ra').innerHTML=ns.preguntaActual['a'];
+		$('ra').style.display='block';
+		$('ra').className='respuestas backgris fontregular';
+	}else{
+		$('ra').innerHTML='';
+		$('ra').style.display='none';
+	}
+	if(ns.preguntaActual['b']){
+		$('rb').innerHTML=ns.preguntaActual['b'];
+		$('rb').style.display='block';
+		$('rb').className='respuestas backgris fontregular';
+	}else{
+		$('rb').innerHTML='';
+		$('rb').style.display='none';
+	}
+	if(ns.preguntaActual['c']){
+		$('rc').innerHTML=ns.preguntaActual['c'];
+		$('rc').style.display='block';
+		$('rc').className='respuestas backgris fontregular';
+	}else{
+		$('rc').innerHTML='';
+		$('rc').style.display='none';
+	}
+	if(ns.preguntaActual['d']){
+		$('rd').innerHTML=ns.preguntaActual['d'];
+		$('rd').style.display='block';
+		$('rd').className='respuestas backgris fontregular';
+	}else{
+		$('rd').innerHTML='';
+		$('rd').style.display='none';
+	}
+	if(ns.preguntaActual['e']){
+		$('re').innerHTML=ns.preguntaActual['d'];
+		$('re').style.display='block';
+		$('re').className='respuestas backgris fontregular';
+	}else{
+		$('re').innerHTML='';
+		$('re').style.display='none';
+	}
+	$('numerador').innerHTML=(ns.preguntas.length-parseInt(ns.preg.length,10))+'/'+ns.preguntas.length;
+}
+function evaluar(cual){
+	if(cual==ns.preguntaActual['corecta']){
+		ns.correctas++;
+		$('r'+cual).className='respuestas backverde fontregular';
+		$('btn').style.display='block';
+		$('btn').className='btcontinuar backverde fontregular';
+		$('btn').innerHTML='CONTINUAR';
+		(function(){$('btn').onclick=function(){siguientePregunta();};})();
+	}else{
+		ns.incorrectas++;
+		$('r'+cual).className='respuestas backrojo fontregular';
+		$('btn').style.display='block';
+		$('btn').className='btcontinuar backrojo fontregular';
+		$('btn').innerHTML='REINTENTAR';
+		(function(){$('btn').onclick=function(){setPreguntas();};})();
+	}
+	
+	
+}
+function fin(){
+	getPage('formulario.html');
+}
+function nuevaprofesion(el){
+	el.style.display='none';
+	var it=document.createElement('div');
+	it.className='cajaform';
+	var leg=getElementsByClassName('addcampolegend');
+	for(var i=0,l=leg.length;i<l;i++){
+		leg[i].style.display='none';
+	}
+	it.innerHTML='<table width="100%" border="0" cellspacing="0" cellpadding="0">  <tr>    <td width="40%" align="center" valign="middle"><input name="profesion[]" type="text" class="textfild backgris"></td>    <td width="10%" align="center" valign="middle" ><img src="images/mas.png" class="mas" onclick="nuevaprofesion(this)"></td>    <td width="50%" align="left" valign="middle" class="campo fontlight"><span class="addcampolegend">(Agregar Campo)</span></td>  </tr></table>';
+	$('otraprofesion').appendChild(it);
+}
+function nuevaempresa(el){
+	el.style.display='none';
+	var it=document.createElement('div');
+	it.className='cajaform';
+	var leg=getElementsByClassName('addcampolegend2');
+	for(var i=0,l=leg.length;i<l;i++){
+		leg[i].style.display='none';
+	}
+	it.innerHTML='<table width="100%" border="0" cellspacing="0" cellpadding="0">  <tr>    <td width="40%" align="center" valign="middle"><input name="empresa[]" type="text" class="textfild backgris"></td>    <td width="10%" align="center" valign="middle" ><img src="images/mas.png" class="mas" onclick="nuevaempresa(this)"></td>    <td width="50%" align="left" valign="middle" class="campo fontlight"><span class="addcampolegend2">(Agregar Campo)</span></td>  </tr></table>';
+	$('otraempresa').appendChild(it);
+}
+function guardarform(){
+	var conocias=document.getElementsByName('conocias'),conoce_secco;
+	if(!conocias[0].checked && !conocias[1].checked){
+		alert('Por favor contanos si conocías a Secco');
+		return;
+	}
+	if(conocias[0].checked ){
+		conoce_secco='Sí';
+	}
+	if(conocias[1].checked ){
+		conoce_secco='No';
+	}
+	var perc=document.getElementsByName('percepcion_imagen'),percepcion;
+	if(!perc[0].checked && !perc[1].checked && !perc[2].checked){
+		alert('Por favor contanos qué imagen tenés de la empresa');
+		return;
+	}
+	if(perc[0].checked ){
+		percepcion='Buena';
+	}
+	if(perc[1].checked ){
+		percepcion='Regular';
+	}
+	if(perc[2].checked ){
+		percepcion='Mala';
+	}
+	var prof=document.getElementsByName('profesion[]'),profesion,profesionarr=[],i=0,l=prof.length;
+	for(;i<l;i++){
+		if(prof[i].value.length>0)
+			profesionarr.push(prof[i].value);
+	}
+	if(profesionarr.length<1){
+		alert('Por favor contanos a qué te dedicás');
+		return;
+	} 
+	profesion=profesionarr.join(',');
+	
+	var emp=document.getElementsByName('empresa[]'),empresa,empresaarr=[];
+	i=0;
+	l=emp.length;
+	for(;i<l;i++){
+		if(emp[i].value.length>0)
+			empresaarr.push(emp[i].value);
+	}
+	if(empresaarr.length<1){
+		alert('Por favor contanos a qué empresa pertenecés');
+		return;
+	} 
+	empresa=empresaarr.join(',');
+	var nombre=document.getElementsByName('nombre')[0].value;
+	if(nombre.length<1){
+		alert('Por favor decinos tu nombre');
+		return;
+	}
+	var apellido=document.getElementsByName('apellido')[0].value;
+	if(apellido.length<1){
+		alert('Por favor decinos tu apellido');
+		return;
+	}
+	var edad=document.getElementsByName('edad')[0].value;
+	if(edad.length<1){
+		alert('Por favor decinos tu edad');
+		return;
+	}
+	var celular=document.getElementsByName('celular')[0].value;
+	if(celular.length<1){
+		alert('Por favor decinos tu celular');
+		return;
+	}
+	var email=document.getElementsByName('email')[0].value;
+	if(email.length<1){
+		alert('Por favor decinos tu email');
+		return;
+	}
+	if(email.indexOf('@')==-1 || email.indexOf('.')==-1){
+		alert('El e-mail no es correcto');
+		return;
+	}
+	var usuario={};
+	usuario['conoce_secco']=conoce_secco;
+	usuario['percepcion']=percepcion;
+	usuario['profesion']=profesion;
+	usuario['tablet']=ns.tablet;
+	usuario['empresa']=empresa;
+	usuario['nombre']=nombre;
+	usuario['apellido']=apellido;
+	usuario['edad']=edad;
+	usuario['celular']=celular;
+	usuario['email']=email;
+	ns.datos.push(usuario);
+	localStorage.setItem('datos',JSON.stringify(ns.datos));
+	getPage('home.html');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function administrar(){
+	$('log').innerHTML='';
+	$('panel').style.display='block';
+}
+
+function testConexion(){
+		//saveDataInServer();
+		var im=new Image(),
+		t=setTimeout(
+				function(){
+					$('log').innerHTML='No hay conexión a internet.';
+				},
+				5000
+		);
+		im.onload=function(){
+			clearTimeout(t);
+			saveDataInServer();
+			return;
+		};
+		im.onerror=function(){
+			clearTimeout(t);
+			$('log').innerHTML='No hay conexión a internet.';
+			return;
+		};
+		im.src='http://www.di-paola.com/works/ideocentro/secco/ajax-loader.gif?'+(+new Date());
+		
+}
+	
+	
+function exportar(){
+	$('log').innerHTML='<img src="images/ajax-loader.gif">';
+	testConexion();
+}
+function saveDataInServer(){
+		var data={'proceso':'savedata','datos':localStorage.getItem('datos')};
+		request(
+				'http://www.di-paola.com/works/ideocentro/secco/proceso2.php',
+				function(r){
+					localStorage.removeItem('datos');
+					inicio();
+					$('log').innerHTML='Los datos han sido guardados.';
+				},
+				data
+		);
+}
+</script>
+</head>
+
+<body>
+
+<div id="admin" onClick="administrar()"></div>
+<div id="panel" style="width:100%; height:100%; position:absolute; top:0; left:0;">
+
+<div style="font-family:Verdana, Geneva, sans-serif; font-size:30px; font-weight:bold; width:80px; height:80px; position:absolute; top:0px; right:0px; text-align:center; line-height:50px; color:#000" onClick="$('panel').style.display='none';">x</div>
+
+<label><br>
+<input type="button" name="" value="Exportar Datos" onClick="exportar()">
+</label>
+<div id="log"></div>
+
+</div>
+
+
+<div id="appcontainer">
+
+<div class="cabezal"><div class="logohome"></div></div>
+<div class="textintro fontregular colorazul">¿Cuánto sabés<br>
+de Secco?</div>
+<div onclick="getPreguntas()" class="btjugar backnaranja fontregular">¡JUGAR!</div>
+</div>
+</body>
+</html>

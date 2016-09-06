@@ -1,0 +1,89 @@
+*{margin:0; padding:0; outline:none;}
+html,body{width: 100%; margin:0; padding:0;} 
+textarea{resize:none}
+
+
+.fontlight{font-family:'Conv_Neo Sans Std Light',Sans-Serif;}
+.fontregular{font-family:'Conv_Neo Sans Std Medium',Sans-Serif;}
+
+
+.colorazul{color:#093c71;}
+
+.backnaranja{ background-color:#ff7002;}
+.backgris{ background-color:#cacaca;}
+.backrojo{ background-color:#bc0000;}
+.backverde{ background-color:#00cc5b;}
+.backazul{ background-color:#093c71;}
+.backgrisclaro{ background-color:#f1f1f1;}
+
+
+
+.limpiar{ clear:both;}
+
+.cabezal{ display:block; width:100%; height:219px; background:url(images/cabezal-home.jpg) top center repeat-x; position:relative;}
+.cabezaltrivia{ background:url(images/cabezal-trivia.jpg) top center repeat-x;}
+.cabezalformulario{ background: url(images/cabezal-cuestionario.jpg) top center repeat-x;}
+.logohome{ display:block; position:absolute; background:url(images/logo-secco-home.png) center center no-repeat; width:140px; height:150px; left:50%; margin-left:-70px; bottom:-30px;}
+.logocuestionario{ display:block; position:absolute; background: url(images/logo-secco-interior.png) center center no-repeat; width:154px; height:219px;  right:5%;  top:0px;}
+
+.textintro{ display:block; width:100%; padding-top:170px; padding-bottom:120px; text-align:center; font-size:84px;}
+
+.btjugar{ display:block; width:196px; height:80px; position:relative; left:50%; margin-left:-98px; font-size:47px; color:#FFF; text-decoration:none; line-height:80px; text-align:center;}
+
+
+
+.pregunta{display:block; width:100%; padding-top:125px; text-align:center; font-size:52px;}
+.cajarespuestas{ display:block; width:100%; height:264px; position:absolute; bottom:182px;}
+.respuestas{ display:block; width:580px; height:80px; margin:4px; position:relative; left:50%; margin-left:-290px; text-align:center; color:#FFF; font-size:26px; line-height:80px; cursor:pointer; text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);}
+.paginador{ display:block; position:fixed; width:100%; height:61px; background:url(images/back-paginador.png) bottom center no-repeat; bottom:0px; text-align:center; color:#7f7f7f; font-size:13px; padding-top:20px;}
+
+.numerador{ font-size:30px;}
+
+.btcontinuar{
+	display: block;
+	width: 196px;
+	height: 47px;
+	position: absolute;
+	left: 50%;
+	margin-left: -98px;
+	bottom: 121px;
+	font-size: 20px;
+	color: #FFF;
+	text-decoration: none;
+	line-height: 47px;
+	text-align: center;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.cajadepreguntas{ display:block; text-align:left; position:relative; width:90%; padding:5%;font-size:20px;}
+
+.btguardar{
+	display: block;
+	width: 196px;
+	height: 47px;
+	position: relative; float:right;
+	font-size: 20px;
+	color: #FFF;
+	text-decoration: none;
+	line-height: 47px;
+	text-align: center;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px; margin-bottom:20px;
+}
+
+.sino{ display:block; width:20%; padding-top:20px; font-size:20px; color:#888c8d; float:left;}
+
+.textfild{ display:block; width:90%; height:35px; line-height:35%; padding-left:5%; padding-right:5%; border:0px; color:#093c71;}
+
+.cajaform{ display:block; margin-top:10px; margin-bottom:10px; position:relative;}
+
+.campo{ font-size:12px; color:#999;}
+.campo2{ font-size:20px; }
+
+#form1{ display:none;}
+#form2{ display:none;}
+
+.mas{ width:35px; height:35px; cursor:pointer;}

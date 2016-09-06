@@ -1,0 +1,92 @@
+<div class="cabezal cabezalformulario"><div class="logocuestionario"></div></div>
+<form action="" method="get">
+<div class="cajadepreguntas colorazul fontregular">
+¿Conocías a Secco?<br>
+<label class="sino fontlight"><input name="conocias" type="radio" value="SÍ"> SÍ</label><label class="sino fontlight"><input name="conocias" type="radio" value="NO"> NO</label>
+<div class="limpiar"></div>
+</div>
+
+<div class="cajadepreguntas colorazul backgrisclaro fontregular">
+¿Qué imagen tenés de la empresa?<br>
+<label class="sino fontlight"><input name="percepcion_imagen" type="radio" value="Buena"> Buena</label><label class="sino fontlight"><input name="percepcion_imagen" type="radio" value="Regular"> Regular</label><label class="sino fontlight"><input name="percepcion_imagen" type="radio" value="Mala"> Mala</label>
+<div class="limpiar"></div>
+</div>
+
+<div class="cajadepreguntas colorazul fontregular">
+¿A qué te dedicás?<br>
+<div class="cajaform">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="40%" align="center" valign="middle"><input name="profesion[]" type="text" class="textfild backgris"></td>
+    <td width="10%" align="center" valign="middle" ><img src="images/mas.png" class="mas" onclick="nuevaprofesion(this)"></td>
+    <td width="50%" align="left" valign="middle" class="campo fontlight"><span class="addcampolegend">(Agregar Campo)</span></td>
+  </tr>
+</table>
+</div>
+<div id="otraprofesion">
+
+</div>
+
+
+</div>
+
+<div class="cajadepreguntas colorazul fontregular backgrisclaro">
+¿A qué empresa pertenecés?<br>
+<div class="cajaform">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="40%" align="center" valign="middle"><input name="empresa[]" type="text" class="textfild backgris"></td>
+    <td width="10%" align="center" valign="middle" ><img src="images/mas.png" class="mas" onclick="nuevaempresa(this)"></td>
+    <td width="50%" align="left" valign="middle" class="campo fontlight"><span class="addcampolegend2">(Agregar Campo)</span></td>
+  </tr>
+</table>
+</div>
+<div id="otraempresa">
+
+</div>
+
+
+
+</div>
+
+
+<div class="cajadepreguntas colorazul fontregular"> Datos Personales
+<br>
+<div class="cajaform">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+<tr>
+  <td width="20%" align="left" valign="middle" class="campo2 fontregular colorazul">Tu Nombre</td>
+  <td width="40%" align="center" valign="middle"><input name="nombre" type="text" class="textfild backgris"></td>
+  </tr>
+  <tr><td height="10"></td></tr>
+  <tr>
+  <td width="20%" align="left" valign="middle" class="campo2 fontregular colorazul">Tu Apellido</td>
+  <td width="40%" align="center" valign="middle"><input name="apellido" type="text" class="textfild backgris"></td>
+  </tr>
+<tr><td height="10"></td></tr>
+
+  <tr>
+  <td width="20%" align="left" valign="middle" class="campo2 fontregular colorazul">Tu Edad</td>
+  <td width="40%" align="center" valign="middle"><input name="edad" type="text" class="textfild backgris"></td>
+  </tr>
+<tr><td height="10"></td></tr>
+  <tr>
+  <td width="20%" align="left" valign="middle" class="campo2 fontregular colorazul">Tu Nro de Celular</td>
+  <td width="40%" align="center" valign="middle"><input name="celular" type="tel" class="textfild backgris"></td>
+  </tr>
+  <tr><td height="10"></td></tr>
+  <tr>
+  <td width="20%" align="left" valign="middle" class="campo2 fontregular colorazul">Tu E-mail</td>
+  <td width="40%" align="center" valign="middle"><input name="email" type="email" class="textfild backgris"></td>
+  </tr>
+
+</table>
+</div>
+
+
+</div>
+
+
+<div class="cajadepreguntas"><div class="btguardar backazul fontregular" onclick="guardarform()">GUARDAR</div></div>
+</form>
