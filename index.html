@@ -90,12 +90,15 @@ function getPreguntas(){
 	ns.preg=[];
 	ns.correctas=0;
 	ns.incorrectas=0;
-	var grupo=ns['preguntas'],pa;
+	ns.respuestas={};
+	var grupo=ns['preguntas'],pa,i=0;
 	while(ns.preg.length<3){
-		pa=grupo[getRandomInt(0, 3)];
+		//pa=grupo[getRandomInt(0, 3)];
+		pa=grupo[i];
 		if(pa && !inArray(pa,ns.preg) && pa['pregunta']){
 			ns.preg.push(pa);
 		}
+		i++;
 	}
 	siguientePregunta();
 }
@@ -109,6 +112,15 @@ function siguientePregunta(){
 	
 }
 function setPreguntas(){
+	(function(){
+			  $('ra').onclick=function(){evaluar('a');};
+			  $('rb').onclick=function(){evaluar('b');};
+			  $('rc').onclick=function(){evaluar('c');};
+			  $('rd').onclick=function(){evaluar('d');};
+			  $('re').onclick=function(){evaluar('e');};
+	})();
+	
+	
 	$('btn').style.display='none';
 	$('pregunta').innerHTML=ns.preguntaActual['pregunta'];
 	if(ns.preguntaActual['pregunta']=='¿A qué se dedica<br>la empresa?'){
@@ -151,7 +163,7 @@ function setPreguntas(){
 		$('rd').style.display='none';
 	}
 	if(ns.preguntaActual['e']){
-		$('re').innerHTML=ns.preguntaActual['d'];
+		$('re').innerHTML=ns.preguntaActual['e'];
 		$('re').style.display='block';
 		$('re').className='respuestas backgris fontregular';
 	}else{
@@ -161,6 +173,10 @@ function setPreguntas(){
 	$('numerador').innerHTML=(ns.preguntas.length-parseInt(ns.preg.length,10))+'/'+ns.preguntas.length;
 }
 function evaluar(cual){
+	if(!ns.respuestas[ns.preguntaActual['pregunta'].split('<br>').join(' ')]){
+		ns.respuestas[ns.preguntaActual['pregunta'].split('<br>').join(' ')]=ns.preguntaActual[cual];
+	}
+	(function(){$('ra').onclick=$('rb').onclick=$('rc').onclick=$('rd').onclick=$('re').onclick=function(){};})();
 	if(cual==ns.preguntaActual['corecta']){
 		ns.correctas++;
 		$('r'+cual).className='respuestas backverde fontregular';
@@ -293,6 +309,14 @@ function guardarform(){
 	usuario['edad']=edad;
 	usuario['celular']=celular;
 	usuario['email']=email;
+	i=1;
+	for(var n in ns.respuestas){
+		usuario['respuesta'+i]=ns.respuestas[n];
+		i++;
+	}
+	
+	
+	
 	ns.datos.push(usuario);
 	localStorage.setItem('datos',JSON.stringify(ns.datos));
 	getPage('home.html');
@@ -381,7 +405,7 @@ function saveDataInServer(){
 <div class="cabezal"><div class="logohome"></div></div>
 <div class="textintro fontregular colorazul">¿Cuánto sabés<br>
 de Secco?</div>
-<div onclick="getPreguntas()" class="btjugar backnaranja fontregular">¡JUGAR!</div>
+<div onClick="getPreguntas()" class="btjugar backnaranja fontregular">¡JUGAR!</div>
 </div>
 </body>
 </html>
